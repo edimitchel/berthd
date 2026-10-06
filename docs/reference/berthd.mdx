@@ -120,7 +120,7 @@ owns, not the journal.
 
 | Command | What it does |
 | --- | --- |
-| `berthd integrations install claude\|cursor\|codex\|gemini\|opencode\|all` | Install Berth's skills and agent hooks for a tool, and `berthd mcp` as an MCP server for Claude Code, Codex and Gemini CLI |
+| `berthd integrations install claude\|cursor\|codex\|gemini\|opencode\|grok\|all` | Install Berth's skills and agent hooks for a tool, and `berthd mcp` as an MCP server for Claude Code, Codex and Gemini CLI |
 | `berthd hook TOOL EVENT [PAYLOAD]` | What those hooks run: turns a tool's hook into a Berth event (`agent.finished`, `agent.waiting`), naming the session from `$BERTH_SESSION`. While berthd is down it keeps the event in `~/.berth/box/spool/`, published when berthd starts |
 
 See [agent integrations](/guides/agent-integrations) for what the hooks and

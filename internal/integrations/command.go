@@ -16,7 +16,7 @@ import (
 )
 
 const Usage = `Integrations
-  %[1]s integrations install claude|cursor|codex|gemini|opencode|all
+  %[1]s integrations install claude|cursor|codex|gemini|opencode|grok|all
                          Install berth's skills and agent hooks for a tool
   %[1]s hook TOOL EVENT [PAYLOAD]
                          What those hooks run: turns a tool's hook into a
@@ -62,7 +62,7 @@ func Hook(args []string, stdin *os.File, stdout, stderr io.Writer, emit Emit) {
 // Install handles `integrations install TOOL...` for the binary at bin.
 func Install(args []string, bin string, out io.Writer) error {
 	if len(args) < 2 || args[0] != "install" {
-		return errors.New("usage: integrations install claude|cursor|codex|gemini|opencode|all")
+		return errors.New("usage: integrations install claude|cursor|codex|gemini|opencode|grok|all")
 	}
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -163,8 +163,15 @@ func InstallTool(home, tool, bin string, out io.Writer) error {
 			return err
 		}
 		fmt.Fprintf(out, "OpenCode: plugin %s at %s\n", verb(changed), plugin)
+	case "grok":
+		hooks := filepath.Join(home, ".grok", "hooks", "berth.json")
+		changed, err := InstallGrokHooks(hooks, bin)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(out, "Grok CLI: hooks %s in %s\n", verb(changed), hooks)
 	default:
-		return fmt.Errorf("unknown tool %q; use claude, cursor, codex, gemini, opencode, or all", tool)
+		return fmt.Errorf("unknown tool %q; use claude, cursor, codex, gemini, opencode, grok, or all", tool)
 	}
 	return nil
 }
@@ -187,7 +194,7 @@ func verb(changed bool) string {
 }
 
 // AllTools are the agents `integrations install all` covers.
-var AllTools = []string{"claude", "cursor", "codex", "gemini", "opencode"}
+var AllTools = []string{"claude", "cursor", "codex", "gemini", "opencode", "grok"}
 
 var validSession = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9_-]{0,62}$`)
 

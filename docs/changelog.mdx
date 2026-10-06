@@ -11,6 +11,13 @@ again.
 
 ## Unreleased
 
+- **Grok CLI.** `grok` (xAI Grok Build) is a built-in agent preset: first
+  prompt as the last argument, `--model` and `--effort` as on the CLI.
+  `berthd integrations install grok` writes session-state hooks to
+  `~/.grok/hooks/berth.json`. Skills and MCP are not installed for Grok
+  yet. See [First agent](/getting-started/first-agent) and
+  [agent integrations](/guides/agent-integrations).
+
 - **Team setup.** A GitHub org publishes how its engineers' boxes are set
   up in a repository called `.berth` (`team.json`, schema `berth.team/v1`,
   plus the box script and any kits), and a new engineer runs it from Berth:
